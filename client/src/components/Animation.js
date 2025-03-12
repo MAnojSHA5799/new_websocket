@@ -7,29 +7,30 @@ const Animation = () => {
     const [waveHeight, setWaveHeight] = useState(30); // Default wave height
     const waveRef = useRef(waveHeight);
 
-    useEffect(() => {
+    useEffect(() => { 
         const connectWebSocket = () => {
-            const ws = new WebSocket("ws://localhost:8080");
-
+            const ws = new WebSocket("wss://new-websocket.onrender.com"); // ✅ Updated WebSocket URL
+    
             ws.onopen = () => console.log("Connected to WebSocket server");
-
+    
             ws.onmessage = (event) => {
                 const data = JSON.parse(event.data);
                 waveRef.current = data.y;
             };
-
+    
             ws.onclose = () => {
                 console.log("WebSocket Disconnected. Reconnecting...");
                 setTimeout(connectWebSocket, 3000);
             };
-
+    
             setSocket(ws);
         };
-
+    
         connectWebSocket();
-
+    
         return () => socket?.close();
     }, []);
+    
 
     useEffect(() => {
         let animationFrame;
