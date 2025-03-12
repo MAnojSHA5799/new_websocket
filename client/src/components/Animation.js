@@ -12,7 +12,7 @@ const Animation = () => {
             const ws = new WebSocket("ws://localhost:8080");
 
             ws.onopen = () => console.log("Connected to WebSocket server");
-            
+
             ws.onmessage = (event) => {
                 const data = JSON.parse(event.data);
                 waveRef.current = data.y;
@@ -20,7 +20,7 @@ const Animation = () => {
 
             ws.onclose = () => {
                 console.log("WebSocket Disconnected. Reconnecting...");
-                setTimeout(connectWebSocket, 3000); // Auto-reconnect
+                setTimeout(connectWebSocket, 3000);
             };
 
             setSocket(ws);
@@ -34,7 +34,7 @@ const Animation = () => {
     useEffect(() => {
         let animationFrame;
         const animateWave = () => {
-            setWaveHeight((prev) => prev + (waveRef.current - prev) * 0.1); // Smooth transition
+            setWaveHeight((prev) => prev + (waveRef.current - prev) * 0.1);
             animationFrame = requestAnimationFrame(animateWave);
         };
 
@@ -57,12 +57,30 @@ const Animation = () => {
         if (socket) {
             socket.send("Stop");
             setIsAnimating(false);
-            setTimeout(() => setShowAnimation(false), 500); // Hide wave after stopping
+            setTimeout(() => setShowAnimation(false), 500);
         }
     };
 
     return (
         <div style={styles.container}>
+            {/* ✅ Gradient Text "Apple Intelligence" */}
+            <svg style={styles.textContainer} viewBox="0 0 600 100">
+                <defs>
+                    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="red">
+                            <animate attributeName="stop-color" values="red; green; blue; red" dur="4s" repeatCount="indefinite"/>
+                        </stop>
+                        <stop offset="100%" stopColor="green">
+                            <animate attributeName="stop-color" values="green; blue; red; green" dur="4s" repeatCount="indefinite"/>
+                        </stop>
+                    </linearGradient>
+                </defs>
+                <text x="50%" y="50%" textAnchor="middle" fontSize="50" fontWeight="bold" fill="url(#textGradient)">
+                    Apple Intelligence
+                </text>
+            </svg>
+
+            {/* ✅ Wave Animation (Now Above) */}
             {showAnimation && (
                 <div style={styles.waveContainer}>
                     <svg viewBox="0 0 1440 50" style={styles.wave}>
@@ -97,6 +115,7 @@ const Animation = () => {
                 </div>
             )}
 
+            {/* ✅ Buttons Below the Wave */}
             <div style={styles.buttonContainer}>
                 <button onClick={startAnimation} style={styles.button}>Start</button>
                 <button onClick={stopAnimation} style={styles.button}>Stop</button>
@@ -118,6 +137,11 @@ const styles = {
         margin: "0",
         backgroundColor: "#f8f9fa",
         position: "relative",
+    },
+    textContainer: {
+        marginTop: "-10%",  // ✅ Added margin-top
+        width: "100%",
+        height: "100px",
     },
     waveContainer: {
         position: "absolute",
