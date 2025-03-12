@@ -4,12 +4,12 @@ const Animation = () => {
     const [socket, setSocket] = useState(null);
     const [isAnimating, setIsAnimating] = useState(false);
     const [showAnimation, setShowAnimation] = useState(false);
-    const [waveHeight, setWaveHeight] = useState(30); // Default wave height
+    const [waveHeight, setWaveHeight] = useState(30); 
     const waveRef = useRef(waveHeight);
 
     useEffect(() => { 
         const connectWebSocket = () => {
-            const ws = new WebSocket("wss://new-websocket.onrender.com"); // ✅ Updated WebSocket URL
+            const ws = new WebSocket("wss://new-websocket.onrender.com"); //  Updated WebSocket URL
     
             ws.onopen = () => console.log("Connected to WebSocket server");
     
@@ -64,7 +64,7 @@ const Animation = () => {
 
     return (
         <div style={styles.container}>
-            {/* ✅ Gradient Text "Apple Intelligence" */}
+            {/*  Gradient Text "Apple Intelligence" */}
             <svg style={styles.textContainer} viewBox="0 0 600 100">
                 <defs>
                     <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -81,7 +81,7 @@ const Animation = () => {
                 </text>
             </svg>
 
-            {/* ✅ Wave Animation (Now Above) */}
+            {/*  Wave Animation (Now Above) */}
             {showAnimation && (
                 <div style={styles.waveContainer}>
                     <svg viewBox="0 0 1440 50" style={styles.wave}>
@@ -116,7 +116,7 @@ const Animation = () => {
                 </div>
             )}
 
-            {/* ✅ Buttons Below the Wave */}
+            {/*  Buttons Below the Wave */}
             <div style={styles.buttonContainer}>
                 <button onClick={startAnimation} style={styles.button}>Start</button>
                 <button onClick={stopAnimation} style={styles.button}>Stop</button>
@@ -140,7 +140,7 @@ const styles = {
         position: "relative",
     },
     textContainer: {
-        marginTop: "-10%",  // ✅ Added margin-top
+        marginTop: "-10%",  
         width: "100%",
         height: "100px",
     },
